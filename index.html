@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Inversión</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  padding: 12px 20px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.results {
+  margin-top: 20px;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Simulador de Inversión</h1>
+  <p>Rentabilidad estimada: 7% anual</p>
+  <p>Inflación aplicada: 2% anual</p>
+
+  <input type="number" id="aportacion" placeholder="Aportación mensual (€)">
+  <input type="number" id="años" placeholder="Años de inversión">
+
+  <button onclick="calcular()">Calcular</button>
+
+  <div class="results" id="resultado"></div>
+</div>
+
+<script>
+function calcular() {
+  const aportacion = parseFloat(document.getElementById("aportacion").value);
+  const años = parseFloat(document.getElementById("años").value);
+
+  const rentabilidad = 0.07;
+  const inflacion = 0.02;
+  const meses = años * 12;
+
+  let capital = 0;
+  for (let i = 0; i < meses; i++) {
+    capital = (capital + aportacion) * (1 + rentabilidad / 12);
+  }
+
+  const totalAportado = aportacion * meses;
+  const ajustadoInflacion = capital / Math.pow((1 + inflacion), años);
+
+  document.getElementById("resultado").innerHTML = `
+    <p>Total aportado: €${totalAportado.toFixed(2)}</p>
+    <p>Capital final estimado: €${capital.toFixed(2)}</p>
+    <p>Capital ajustado a inflación: €${ajustadoInflacion.toFixed(2)}</p>
+  `;
+}
+</script>
+
+</body>
+</html>
