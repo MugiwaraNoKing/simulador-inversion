@@ -2,267 +2,220 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador de Inversión | Fynantium</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: #0B0F1A;
-    color: #ffffff;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #0f1115;
+  color: #eaeaea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* HEADER */
-.header {
-    padding: 30px 50px;
+/* LOGO */
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  width: 210px;
 }
 
-.logo img {
-    height: 180px;
-}
-
-/* CONTENIDO */
+/* CONTENEDOR PRINCIPAL */
 .container {
-    max-width: 1150px;
-    margin: auto;
-    padding: 10px 20px 40px 20px;
+  margin-top: 110px;
+  width: 100%;
+  max-width: 680px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* TITULO PREMIUM */
+.title-wrapper {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+}
+
+.title-wrapper::before,
+.title-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #c6a75e;
+}
+
+.title-wrapper::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.title-wrapper::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
 }
 
 h1 {
-    text-align: center;
-    font-size: 42px;
-    font-weight: 600;
-    margin-bottom: 60px;
-    letter-spacing: -1px;
-    color: #f1f3f8;
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
-/* SIMULADOR */
-.simulator {
-    display: flex;
-    gap: 60px;
-    flex-wrap: wrap;
+.title-line {
+  width: 80px;
+  height: 1px;
+  background: #c6a75e;
+  margin: 18px auto 0;
+  opacity: 0.8;
 }
 
-.inputs, .results {
-    flex: 1;
-    min-width: 300px;
-}
-
-label {
-    font-size: 13px;
-    color: #7f8699;
+/* INPUTS */
+.input-group {
+  background: #1a1f27;
+  padding: 25px;
+  border-radius: 14px;
+  margin-bottom: 30px;
 }
 
 input {
-    width: 220px;
-    padding: 12px;
-    margin-bottom: 18px;
-    border-radius: 8px;
-    border: none;
-    background-color: #161b26;
-    color: white;
-    font-size: 15px;
+  width: 160px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #252b35;
+  color: white;
+  text-align: center;
+  font-size: 16px;
 }
 
-input:disabled {
-    background-color: #1d2230;
-    color: #888;
+/* TEXTO SUTIL */
+.info-text {
+  font-size: 13px;
+  color: #888;
+  margin-top: 10px;
 }
 
-.small-note {
-    font-size: 12px;
-    color: #6f768a;
-    margin-top: -10px;
-    margin-bottom: 15px;
-}
-
-/* BOTÓN PREMIUM */
+/* BOTON PREMIUM */
 button {
-    padding: 15px 38px;
-    background: linear-gradient(135deg, #d4af37, #b9932f);
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 17px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.25s ease;
+  padding: 12px 32px;
+  font-size: 17px;
+  border-radius: 30px;
+  border: 1px solid #c6a75e;
+  background: transparent;
+  color: #c6a75e;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.35);
+  background: #c6a75e;
+  color: #111;
+  box-shadow: 0 0 15px rgba(198,167,94,0.4);
 }
 
-/* RESULTADOS DESTACADOS */
-.result-box {
-    background: linear-gradient(145deg, #161b26, #1c2230);
-    padding: 22px;
-    border-radius: 10px;
-    margin-bottom: 16px;
-    font-size: 18px;
+/* RESULTADOS */
+.results {
+  margin-top: 30px;
+  font-size: 22px;
+  font-weight: 500;
+  background: #161b22;
+  padding: 25px;
+  border-radius: 14px;
 }
 
-.result-box strong {
-    display: block;
-    font-size: 24px;
-    margin-top: 5px;
-    color: #ffffff;
-}
-
-/* GRÁFICO */
-.chart-container {
-    background-color: #161b26;
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 25px;
-}
-
-/* BLOQUE FINAL */
-.psychological {
-    margin-top: 100px;
-    text-align: center;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.psychological h2 {
-    font-weight: 600;
-    font-size: 26px;
-    margin-bottom: 18px;
-}
-
-.psychological p {
-    color: #8b90a0;
-    font-size: 18px;
+/* GRAFICO */
+canvas {
+  margin-top: 20px;
+  background: #1a1f27;
+  border-radius: 12px;
+  padding: 15px;
 }
 </style>
 </head>
-
 <body>
 
-<div class="header">
-    <div class="logo">
-        <img src="logo-fynantium.png" alt="Fynantium Logo">
-    </div>
-</div>
+<img src="assets/logo.png" class="logo" alt="Fynantium Logo">
 
 <div class="container">
 
-<h1>Proyecta la evolución de tu capital con precisión estratégica</h1>
+  <div class="title-wrapper">
+    <h1>Simulador de Inversión</h1>
+    <div class="title-line"></div>
+  </div>
 
-<div class="simulator">
+  <div class="input-group">
+    <div>
+      <input type="number" id="aportacion" placeholder="Aportación mensual">
+      <input type="number" id="años" placeholder="Años">
+    </div>
+    <div>
+      <input type="number" value="8" disabled>
+      <input type="number" value="2" disabled>
+    </div>
+    <div class="info-text">
+      Rentabilidad media anual 8%<br>
+      Inflación media anual 2%
+    </div>
+  </div>
 
-<div class="inputs">
-<label>Aportación mensual (€)</label><br>
-<input type="number" id="monthly" value="300"><br>
+  <button onclick="calcular()">Calcular simulación</button>
 
-<label>Años de inversión</label><br>
-<input type="number" id="years" value="20"><br>
+  <div class="results" id="resultado"></div>
 
-<label>Rentabilidad anual (%)</label><br>
-<input type="number" value="8" disabled>
-<div class="small-note">Rentabilidad media anual 8%</div>
-
-<label>Inflación anual (%)</label><br>
-<input type="number" value="2" disabled>
-<div class="small-note">Inflación media anual 2%</div>
-
-<button onclick="calculate()">Calcular simulación</button>
-</div>
-
-<div class="results">
-<div class="result-box">Capital final
-<strong id="final"></strong></div>
-
-<div class="result-box">Total aportado
-<strong id="invested"></strong></div>
-
-<div class="result-box">Beneficio generado
-<strong id="profit"></strong></div>
-
-<div class="result-box">Capital ajustado a inflación
-<strong id="real"></strong></div>
-
-<div class="chart-container">
-    <canvas id="growthChart"></canvas>
-</div>
-</div>
+  <canvas id="grafico" width="500" height="250"></canvas>
 
 </div>
 
-<div class="psychological">
-<h2>La claridad financiera transforma decisiones en crecimiento</h2>
-<p>
-La diferencia entre reaccionar y planificar está en comprender cómo evoluciona tu capital en el tiempo.
-Controlar el futuro de tu dinero empieza por medirlo.
-</p>
-</div>
-
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-let chart;
+function calcular() {
+  const aportacion = parseFloat(document.getElementById("aportacion").value);
+  const años = parseInt(document.getElementById("años").value);
+  const rentabilidad = 0.08;
 
-function calculate() {
-    const monthly = parseFloat(document.getElementById("monthly").value);
-    const years = parseFloat(document.getElementById("years").value);
+  let capital = 0;
+  let datos = [];
 
-    const rate = 0.08 / 12;
-    const inflation = 0.02;
-    const months = years * 12;
+  for (let i = 1; i <= años; i++) {
+    capital = (capital + (aportacion * 12)) * (1 + rentabilidad);
+    datos.push(capital);
+  }
 
-    let total = 0;
-    let data = [];
+  document.getElementById("resultado").innerHTML =
+    "Capital estimado: €" + capital.toFixed(0);
 
-    for (let i = 1; i <= months; i++) {
-        total = total * (1 + rate) + monthly;
-        if (i % 12 === 0) {
-            data.push(total);
-        }
+  const ctx = document.getElementById('grafico').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length: años}, (_, i) => i + 1),
+      datasets: [{
+        data: datos,
+        borderColor: '#c6a75e',
+        borderWidth: 2,
+        tension: 0.3,
+        pointRadius: 0
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      }
     }
-
-    const invested = monthly * months;
-    const profit = total - invested;
-    const real = total / Math.pow(1 + inflation, years);
-
-    document.getElementById("final").innerText = total.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("invested").innerText = invested.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("profit").innerText = profit.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("real").innerText = real.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-
-    if (chart) chart.destroy();
-
-    const ctx = document.getElementById('growthChart').getContext('2d');
-    chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: Array.from({length: years}, (_, i) => i + 1),
-            datasets: [{
-                data: data,
-                borderColor: '#d4af37',
-                backgroundColor: 'rgba(212,175,55,0.1)',
-                tension: 0.35,
-                fill: true
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false }},
-            scales: {
-                x: { ticks: { color: '#8b90a0' }},
-                y: { ticks: { color: '#8b90a0' }}
-            }
-        }
-    });
+  });
 }
-
-calculate();
 </script>
 
 </body>
