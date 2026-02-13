@@ -4,292 +4,337 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador de Inversión | Fynantium</title>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+/* FONDO */
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: #0B0F1A;
-    color: #ffffff;
+    background: #0f1115;
+    color: #e5e7eb;
 }
 
-/* HEADER */
-.header {
-    padding: 20px 50px 0px 50px;
+/* LOGO */
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 50px;
 }
 
 .logo img {
-    height: 180px;
+    height: 120px;
 }
 
 /* CONTENIDO */
 .container {
-    max-width: 1150px;
-    margin: -150px auto 40px auto;  /* SUBIDO HACIA ARRIBA */
+    max-width: 1100px;
+    margin: 40px auto 60px auto;
     padding: 0 20px;
 }
 
-/* TITULO CON PLACA METÁLICA */
+/* TITULO */
 .title-wrapper {
     text-align: center;
-    margin: 10px 0 50px 0;
+    margin-bottom: 40px;
 }
+
 .title-plate {
     display: inline-block;
     padding: 22px 60px;
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2c313c 0%,
-            #1a1f28 40%,
-            #0f131b 100%
-        );
-
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1a1f2b, #10141d);
     box-shadow:
-        inset 0 2px 4px rgba(255,255,255,0.06),
-        inset 0 -4px 12px rgba(0,0,0,0.8),
-        0 12px 35px rgba(0,0,0,0.6);
-
-    border: 1px solid rgba(212,175,55,0.35);
+        inset 0 1px 2px rgba(255,255,255,0.05),
+        inset 0 -2px 6px rgba(0,0,0,0.6),
+        0 8px 25px rgba(0,0,0,0.5);
+    border: 1px solid rgba(212,175,55,0.25);
 }
 
 h1 {
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 500;
-    letter-spacing: 1.2px;
-    margin: 0;
+    letter-spacing: 1.5px;
     background: linear-gradient(90deg, #ffffff, #d6d6d6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* SIMULADOR */
-.simulator {
+/* INPUTS */
+.inputs {
     display: flex;
-    gap: 60px;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 25px;
     flex-wrap: wrap;
 }
 
-.inputs, .results {
-    flex: 1;
-    min-width: 300px;
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 label {
-    font-size: 13px;
-    color: #7f8699;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #9ca3af;
 }
 
 input {
-    width: 160px;
+    width: 140px;
     padding: 10px;
-    margin-bottom: 16px;
     border-radius: 8px;
     border: none;
-    background-color: #161b26;
+    background: #1c2027;
     color: white;
     font-size: 15px;
+    text-align: center;
 }
 
-input:disabled {
-    background-color: #1d2230;
-    color: #888;
+input[disabled] {
+    opacity: 0.6;
 }
 
-.small-note {
-    font-size: 12px;
-    color: #6f768a;
-    margin-top: -8px;
-    margin-bottom: 14px;
+/* NOTA */
+.note {
+    text-align: center;
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 30px;
 }
 
-/* BOTÓN */
+/* BOTON */
 button {
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #d4af37, #b9932f);
+    display: block;
+    margin: 0 auto 50px auto;
+    padding: 14px 40px;
+    font-size: 17px;
+    border-radius: 30px;
     border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 18px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.25s ease;
+    background: linear-gradient(90deg, #d4af37, #b8962e);
+    color: #111;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.35);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.4);
 }
 
 /* RESULTADOS */
-.result-box {
-    background: linear-gradient(145deg, #161b26, #1c2230);
-    padding: 24px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    font-size: 18px;
+.results {
+    background: #141821;
+    border-radius: 14px;
+    padding: 35px;
+    margin-bottom: 50px;
+    border-top: 2px solid rgba(212,175,55,0.6);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
 }
 
-.result-box strong {
-    display: block;
-    font-size: 28px;
-    margin-top: 6px;
+.results.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.metric h3 {
+    font-size: 14px;
+    color: #9ca3af;
+    margin-bottom: 8px;
+}
+
+.metric p {
+    font-size: 26px;
+    font-weight: 600;
     color: #ffffff;
 }
 
-/* GRÁFICO */
+/* GRAFICA */
 .chart-container {
-    background-color: #161b26;
-    padding: 25px;
+    background: #1a1f27;
+    padding: 20px;
     border-radius: 12px;
-    margin-top: 25px;
 }
 
-/* BLOQUE FINAL */
-.footer-block {
-    margin-top: 70px;
+canvas {
+    max-height: 320px;
+}
+
+/* MICROCOPY */
+.microcopy {
     text-align: center;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 13px;
+    color: #8b8f98;
+    margin-top: 20px;
 }
 
-.footer-block h2 {
-    font-weight: 600;
-    font-size: 24px;
+/* PRO */
+.pro-block {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 14px;
+    color: #9ca3af;
 }
 
-.footer-block p {
-    color: #8b90a0;
-    font-size: 18px;
+.pro-block span {
+    display: block;
+    margin-top: 8px;
+    color: #d4af37;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <div class="logo">
-        <img src="logo-fynantium.png" alt="Fynantium Logo">
-    </div>
+<div class="logo">
+    <img src="logo.png" alt="Fynantium Logo">
 </div>
 
 <div class="container">
 
-<div class="title-wrapper">
-    <div class="title-plate">
-        <h1>Proyección Estratégica de Capital</h1>
+    <div class="title-wrapper">
+        <div class="title-plate">
+            <h1>Simulador de Inversión</h1>
+        </div>
     </div>
-</div>
 
-<div class="simulator">
+    <div class="inputs">
+        <div class="input-group">
+            <label>Aportación mensual (€)</label>
+            <input type="number" id="monthly" value="300">
+        </div>
 
-<div class="inputs">
-<label>Aportación mensual (€)</label><br>
-<input type="number" id="monthly" value="300"><br>
+        <div class="input-group">
+            <label>Años de inversión</label>
+            <input type="number" id="years" value="20">
+        </div>
 
-<label>Años de inversión</label><br>
-<input type="number" id="years" value="20"><br>
+        <div class="input-group">
+            <label>Rentabilidad anual (%)</label>
+            <input type="number" value="8" disabled>
+        </div>
 
-<label>Rentabilidad anual (%)</label><br>
-<input type="number" value="8" disabled>
-<div class="small-note">Rentabilidad media anual 8%</div>
+        <div class="input-group">
+            <label>Inflación anual (%)</label>
+            <input type="number" value="2" disabled>
+        </div>
+    </div>
 
-<label>Inflación anual (%)</label><br>
-<input type="number" value="2" disabled>
-<div class="small-note">Inflación media anual 2%</div>
+    <div class="note">
+        Rentabilidad media anual 8% · Inflación media anual 2%
+    </div>
 
-<button onclick="calculate()">Calcular simulación</button>
-</div>
+    <button onclick="calculate()">Calcular proyección</button>
 
-<div class="results">
-<div class="result-box">Capital final
-<strong id="final"></strong></div>
+    <div class="results" id="results">
+        <div class="results-grid">
+            <div class="metric">
+                <h3>Capital final</h3>
+                <p id="finalCapital">-</p>
+            </div>
+            <div class="metric">
+                <h3>Capital ajustado a inflación</h3>
+                <p id="realCapital">-</p>
+            </div>
+            <div class="metric">
+                <h3>Total aportado</h3>
+                <p id="totalInvested">-</p>
+            </div>
+            <div class="metric">
+                <h3>Intereses generados</h3>
+                <p id="interestEarned">-</p>
+            </div>
+        </div>
 
-<div class="result-box">Total aportado
-<strong id="invested"></strong></div>
+        <div class="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
 
-<div class="result-box">Beneficio generado
-<strong id="profit"></strong></div>
+        <div class="microcopy">
+            Resultados basados en rendimientos históricos reales.
+        </div>
+    </div>
 
-<div class="result-box">Capital ajustado a inflación
-<strong id="real"></strong></div>
-
-<div class="chart-container">
-    <canvas id="growthChart"></canvas>
-</div>
-</div>
-
-</div>
-
-<div class="footer-block">
-<h2>La claridad financiera transforma decisiones en crecimiento</h2>
-<p>
-Controlar el futuro de tu dinero empieza por comprender cómo evoluciona tu capital en el tiempo.
-</p>
-</div>
+    <div class="pro-block">
+        Versión avanzada próximamente
+        <span>Mayor control · Comparación de escenarios · Exportación profesional</span>
+    </div>
 
 </div>
 
 <script>
+
 let chart;
 
 function calculate() {
     const monthly = parseFloat(document.getElementById("monthly").value);
     const years = parseFloat(document.getElementById("years").value);
-
-    const rate = 0.08 / 12;
+    const rate = 0.08;
     const inflation = 0.02;
-    const months = years * 12;
 
-    let total = 0;
+    const months = years * 12;
+    let balance = 0;
     let data = [];
 
-    for (let i = 1; i <= months; i++) {
-        total = total * (1 + rate) + monthly;
-        if (i % 12 === 0) data.push(total);
+    for (let i = 0; i <= months; i++) {
+        balance = balance * (1 + rate/12) + monthly;
+        if (i % 12 === 0) {
+            data.push(balance);
+        }
     }
 
-    const invested = monthly * months;
-    const profit = total - invested;
-    const real = total / Math.pow(1 + inflation, years);
+    const totalInvested = monthly * months;
+    const finalCapital = balance;
+    const realCapital = finalCapital / Math.pow(1 + inflation, years);
+    const interestEarned = finalCapital - totalInvested;
 
-    document.getElementById("final").innerText = total.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("invested").innerText = invested.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("profit").innerText = profit.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
-    document.getElementById("real").innerText = real.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
+    document.getElementById("finalCapital").innerText = finalCapital.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
+    document.getElementById("realCapital").innerText = realCapital.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
+    document.getElementById("totalInvested").innerText = totalInvested.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
+    document.getElementById("interestEarned").innerText = interestEarned.toLocaleString("es-ES", {style:"currency", currency:"EUR"});
+
+    const ctx = document.getElementById("chart").getContext("2d");
 
     if (chart) chart.destroy();
 
-    const ctx = document.getElementById('growthChart').getContext('2d');
     chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({length: years}, (_, i) => i + 1),
+            labels: Array.from({length: years + 1}, (_, i) => i),
             datasets: [{
                 data: data,
-                borderColor: '#d4af37',
-                backgroundColor: 'rgba(212,175,55,0.1)',
-                tension: 0.35,
-                fill: true
+                borderColor: "#d4af37",
+                borderWidth: 3,
+                fill: false,
+                tension: 0.3
             }]
         },
         options: {
             plugins: { legend: { display: false }},
             scales: {
-                x: { ticks: { color: '#8b90a0' }},
-                y: { ticks: { color: '#8b90a0' }}
+                x: { grid: { color: "rgba(255,255,255,0.05)" }},
+                y: { grid: { color: "rgba(255,255,255,0.05)" }}
             }
         }
     });
+
+    document.getElementById("results").classList.add("visible");
 }
 
-calculate();
 </script>
 
 </body>
