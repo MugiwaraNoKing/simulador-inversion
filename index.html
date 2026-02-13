@@ -18,38 +18,33 @@ body {
 
 /* HEADER */
 .header {
-    padding: 25px 40px;
+    padding: 30px 50px;
 }
 
 .logo img {
-    height: 85px;
+    height: 180px;
 }
 
 /* CONTENIDO */
 .container {
-    max-width: 1100px;
+    max-width: 1150px;
     margin: auto;
-    padding: 20px;
+    padding: 10px 20px 40px 20px;
 }
 
 h1 {
     text-align: center;
-    font-size: 38px;
+    font-size: 42px;
     font-weight: 600;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-    color: #e6e9f0;
-}
-
-.subtitle {
-    text-align: center;
     margin-bottom: 60px;
-    color: #8b90a0;
+    letter-spacing: -1px;
+    color: #f1f3f8;
 }
 
+/* SIMULADOR */
 .simulator {
     display: flex;
-    gap: 50px;
+    gap: 60px;
     flex-wrap: wrap;
 }
 
@@ -59,14 +54,14 @@ h1 {
 }
 
 label {
-    font-size: 14px;
-    color: #8b90a0;
+    font-size: 13px;
+    color: #7f8699;
 }
 
 input {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 20px;
+    width: 220px;
+    padding: 12px;
+    margin-bottom: 18px;
     border-radius: 8px;
     border: none;
     background-color: #161b26;
@@ -76,51 +71,71 @@ input {
 
 input:disabled {
     background-color: #1d2230;
-    color: #777;
+    color: #888;
 }
 
+.small-note {
+    font-size: 12px;
+    color: #6f768a;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+/* BOTÓN PREMIUM */
 button {
-    padding: 15px 35px;
-    background-color: #d4af37;
+    padding: 15px 38px;
+    background: linear-gradient(135deg, #d4af37, #b9932f);
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     font-size: 17px;
     cursor: pointer;
     margin-top: 10px;
-    width: auto;
+    transition: all 0.25s ease;
 }
 
 button:hover {
-    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.35);
 }
 
+/* RESULTADOS DESTACADOS */
 .result-box {
-    background-color: #161b26;
-    padding: 18px;
-    border-radius: 8px;
-    margin-bottom: 14px;
+    background: linear-gradient(145deg, #161b26, #1c2230);
+    padding: 22px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 18px;
 }
 
+.result-box strong {
+    display: block;
+    font-size: 24px;
+    margin-top: 5px;
+    color: #ffffff;
+}
+
+/* GRÁFICO */
 .chart-container {
     background-color: #161b26;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 25px;
 }
 
+/* BLOQUE FINAL */
 .psychological {
-    margin-top: 90px;
+    margin-top: 100px;
     text-align: center;
-    max-width: 700px;
+    max-width: 720px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .psychological h2 {
     font-weight: 600;
-    margin-bottom: 15px;
-    color: #e6e9f0;
+    font-size: 26px;
+    margin-bottom: 18px;
 }
 
 .psychological p {
@@ -140,32 +155,40 @@ button:hover {
 
 <div class="container">
 
-<h1>Simula el crecimiento estratégico de tu capital</h1>
-<p class="subtitle">Rentabilidad estimada 8% anual · Inflación 2% anual</p>
+<h1>Proyecta la evolución de tu capital con precisión estratégica</h1>
 
 <div class="simulator">
 
 <div class="inputs">
-<label>Aportación mensual (€)</label>
-<input type="number" id="monthly" value="300">
+<label>Aportación mensual (€)</label><br>
+<input type="number" id="monthly" value="300"><br>
 
-<label>Años de inversión</label>
-<input type="number" id="years" value="20">
+<label>Años de inversión</label><br>
+<input type="number" id="years" value="20"><br>
 
-<label>Rentabilidad anual (%)</label>
+<label>Rentabilidad anual (%)</label><br>
 <input type="number" value="8" disabled>
+<div class="small-note">Rentabilidad media anual 8%</div>
 
-<label>Inflación anual (%)</label>
+<label>Inflación anual (%)</label><br>
 <input type="number" value="2" disabled>
+<div class="small-note">Inflación media anual 2%</div>
 
 <button onclick="calculate()">Calcular simulación</button>
 </div>
 
 <div class="results">
-<div class="result-box">Capital final: <strong id="final"></strong></div>
-<div class="result-box">Total aportado: <strong id="invested"></strong></div>
-<div class="result-box">Beneficio generado: <strong id="profit"></strong></div>
-<div class="result-box">Capital ajustado a inflación: <strong id="real"></strong></div>
+<div class="result-box">Capital final
+<strong id="final"></strong></div>
+
+<div class="result-box">Total aportado
+<strong id="invested"></strong></div>
+
+<div class="result-box">Beneficio generado
+<strong id="profit"></strong></div>
+
+<div class="result-box">Capital ajustado a inflación
+<strong id="real"></strong></div>
 
 <div class="chart-container">
     <canvas id="growthChart"></canvas>
@@ -175,10 +198,10 @@ button:hover {
 </div>
 
 <div class="psychological">
-<h2>La estrategia transforma el tiempo en crecimiento</h2>
+<h2>La claridad financiera transforma decisiones en crecimiento</h2>
 <p>
-Cuando entiendes cómo evoluciona tu dinero, dejas de reaccionar y empiezas a decidir con claridad.
-El control financiero no es suerte. Es visión y disciplina.
+La diferencia entre reaccionar y planificar está en comprender cómo evoluciona tu capital en el tiempo.
+Controlar el futuro de tu dinero empieza por medirlo.
 </p>
 </div>
 
@@ -224,7 +247,7 @@ function calculate() {
             datasets: [{
                 data: data,
                 borderColor: '#d4af37',
-                backgroundColor: 'rgba(212,175,55,0.08)',
+                backgroundColor: 'rgba(212,175,55,0.1)',
                 tension: 0.35,
                 fill: true
             }]
