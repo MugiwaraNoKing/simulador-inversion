@@ -165,6 +165,17 @@ footer {
     }
     
 }
+/* ANIMACIONES SUAVES */
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 
 </style>
@@ -177,20 +188,20 @@ footer {
 
 <div class="container">
 
-    <div class="hero">
+    <div class="hero fade-up">
         <h1>Herramientas inteligentes para rentabilizar tu dinero</h1>
         <p>Análisis estratégico financiero aplicado a decisiones reales.</p>
         <a href="/simuladordeinversion" class="btn">Acceder al Simulador</a>
     </div>
 
-    <div class="identity">
+    <div class="identity fade-up">
         <p>
         Fynantium es un laboratorio analítico independiente. 
         Creamos herramientas sencillas, claras y precisas y para ayudarte a crear mejores estrategias financieras personalizadas.
         </p>
     </div>
 
-    <div class="card">
+    <div class="card fade-up">
         <h2>Simulador de Inversión a Largo Plazo</h2>
         <ul>
             <li>Proyección basada en rentabilidad histórica real</li>
@@ -201,14 +212,14 @@ footer {
         <a href="/simuladordeinversion" class="btn">Probar ahora</a>
     </div>
 
-    <div class="philosophy">
+    <div class="philosophy fade-up">
         <p>
         El control no está en predecir el mercado.  
         Está en entender como afecta el tiempo en la rentabilidad y crear estrategias adecuadas para tus objetivos.
         </p>
     </div>
 
-    <div class="education">
+    <div class="education fade-up">
         <h3>El poder del interés compuesto</h3>
         <p>
         El interés compuesto permite que tus rendimientos generen nuevos rendimientos.
@@ -223,6 +234,19 @@ footer {
 © 2026 Fynantium — Laboratorio Financiero Profesional
     Contacto | contacto@fynantium.com
 </footer>
+<script>
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-up').forEach(el => {
+    observer.observe(el);
+});
+</script>
 
 </body>
 </html>
