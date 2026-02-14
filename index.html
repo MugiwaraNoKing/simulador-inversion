@@ -4,125 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fynantium — Laboratorio Cuantitativo</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
 
+/* BASE */
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #0f1116;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f141c, #111827);
     color: #e5e7eb;
 }
 
-/* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 60px;
+/* LOGO */
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    height: 250px;
 }
 
-.logo img {
-    height: 250px;
+/* CONTENEDOR */
+.container {
+    max-width: 1100px;
+    margin: 140px auto 80px auto;
+    padding: 0 25px;
 }
 
 /* HERO */
 .hero {
-    text-align: center;
-    padding: 120px 20px 80px 20px;
-    max-width: 900px;
-    margin: -240px auto 60px auto;
+    margin-bottom: 70px;
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 38px;
     font-weight: 500;
-    margin-bottom: 25px;
     letter-spacing: 1px;
+    margin-bottom: 25px;
 }
 
 .hero p {
-    font-size: 20px;
-    font-weight: 300;
+    font-size: 18px;
     color: #9ca3af;
-    margin-bottom: 50px;
+    max-width: 600px;
+    margin-bottom: 35px;
 }
 
-/* BOTON CTA */
-.cta {
+/* BOTÓN */
+.btn {
     display: inline-block;
-    padding: 18px 40px;
-    border-radius: 12px;
-    background: linear-gradient(90deg, #d4af37, #b9932f);
-    color: #0f1116;
-    font-weight: 600;
+    padding: 14px 34px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #d4af37, #f5d061);
+    color: #111827;
     text-decoration: none;
-    font-size: 18px;
     transition: all 0.3s ease;
 }
 
-.cta:hover {
+.btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.4);
 }
 
-/* BLOQUE INFERIOR */
-.section {
-    text-align: center;
-    padding: 100px 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+/* IDENTIDAD */
+.identity {
+    margin-bottom: 70px;
+    max-width: 750px;
 }
 
-.section h2 {
-    font-weight: 500;
-    margin-bottom: 20px;
+.identity p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #d1d5db;
 }
 
-.section p {
+/* TARJETA PRODUCTO */
+.card {
+    background: linear-gradient(145deg, #1a1f2b, #10141d);
+    padding: 30px 35px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.2);
+    margin-bottom: 70px;
+}
+
+.card h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.card ul {
+    padding-left: 20px;
+    margin-bottom: 25px;
+    color: #cbd5e1;
+}
+
+.card li {
+    margin-bottom: 8px;
+}
+
+/* FILOSOFÍA */
+.philosophy {
+    max-width: 650px;
+    margin-bottom: 60px;
+}
+
+.philosophy p {
+    font-size: 16px;
     color: #9ca3af;
-    max-width: 700px;
-    margin: auto;
+    line-height: 1.6;
+    font-style: italic;
 }
 
-/* RESPONSIVE */
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
 @media (max-width: 768px) {
+    .logo {
+        height: 50px;
+        left: 25px;
+    }
+
+    .container {
+        margin-top: 120px;
+    }
+
     .hero h1 {
-        font-size: 36px;
-    }
-
-    .hero p {
-        font-size: 18px;
-    }
-
-    .header {
-        padding: 20px;
+        font-size: 28px;
     }
 }
 
 </style>
 </head>
-
 <body>
 
-<div class="header">
-    <div class="logo">
-        <img src="assets/logo-fynantium.png" alt="Fynantium">
+<a href="https://fynantium.com">
+    <img src="logo-fynantium.png" alt="Fynantium" class="logo">
+</a>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>Herramientas inteligentes para sacar partido a tu dinero de forma sencilla.</h1>
+        <p>Precisión estratégica aplicada a decisiones reales.</p>
+        <a href="/simuladordeinversion" class="btn">Acceder al Simulador</a>
     </div>
+
+    <div class="identity">
+        <p>
+        Fynantium es un laboratorio cuantitativo independiente. 
+        Creamos herramientas claras, precisas y estratégicas para ayudarte a tomar mejores decisiones financieras sin complejidad innecesaria.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Simulador de Inversión a Largo Plazo</h2>
+        <ul>
+            <li>Proyección basada en interés compuesto</li>
+            <li>Visualización clara del crecimiento</li>
+            <li>Resultados inmediatos y comprensibles</li>
+            <li>Versión PRO con mayor precisión y control</li>
+        </ul>
+        <a href="/simuladordeinversion" class="btn">Probar ahora</a>
+    </div>
+
+    <div class="philosophy">
+        <p>
+        El control no está en predecir el mercado.  
+        Está en entender el tiempo, el interés compuesto y la estrategia.
+        </p>
+    </div>
+
 </div>
 
-<div class="hero">
-    <h1>Herramientas inteligentes para sacar partido a tu dinero de forma sencilla.</h1>
-    <p>Laboratorio cuantitativo minimalista diseñado para ofrecer claridad, estrategia y control.</p>
-    <a href="/simuladordeinversion" class="cta">Acceder al Simulador</a>
-</div>
-
-<div class="section">
-    <h2>Precisión estratégica</h2>
-    <p>
-    Fynantium desarrolla herramientas cuantitativas diseñadas para facilitar decisiones financieras más inteligentes.
-    Sin ruido. Sin complejidad innecesaria.
-    </p>
-</div>
+<footer>
+© 2026 Fynantium — Laboratorio Cuantitativo
+</footer>
 
 </body>
 </html>
