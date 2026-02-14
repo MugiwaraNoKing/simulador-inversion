@@ -138,27 +138,26 @@ input[disabled] {
 }
 
 /* BOTON */
-button {
-    display: block;
-    margin: 0 auto 50px auto;
-    padding: 14px 40px;
+.btn {
+    display: inline-block;
+    padding: 17px 42px;
+    letter-spacing: 0.4px;
     font-size: 17px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
+    font-weight: 500;
+    border-radius: 8px;
     background: linear-gradient(90deg, #c9a63a, #e4c15a);
-    color: #111;
-    font-weight: 600;
+    color: #111827;
+    text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-button:hover {
+.btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.4);
 }
-.btn::after {
+    .btn::after {
     content: "";
     position: absolute;
     top: 0;
@@ -177,7 +176,6 @@ button:hover {
 .btn:hover::after {
     left: 100%;
 }
-
 
 /* RESULTADOS */
 .results {
