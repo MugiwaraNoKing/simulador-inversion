@@ -566,7 +566,22 @@ const verticalLinePlugin = {
             ctx.strokeStyle = 'rgba(212,175,55,0.35)';
             ctx.stroke();
             ctx.restore();
-        }
+        };
+    const glowPlugin = {
+            id: 'glow',
+            beforeDatasetDraw(chart, args) {
+                const {ctx} = chart;
+                ctx.save();
+                ctx.shadowColor = "rgba(212,175,55,0.25)";
+                ctx.shadowBlur = 12;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            };
+            afterDatasetDraw(chart, args) {
+            chart.ctx.restore();
+            }
+        };
+
     }
 };
 
@@ -689,8 +704,6 @@ chart = new Chart(ctx, {
                 }
             }
         }
-const glowPlugin = {
-    id: 'glow',
     beforeDatasetDraw(chart, args) {
         const {ctx} = chart;
         ctx.save();
