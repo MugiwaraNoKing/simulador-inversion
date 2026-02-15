@@ -619,15 +619,29 @@ chart = new Chart(ctx, {
     data: {
         labels: Array.from({length: years + 1}, (_, i) => i),
         datasets: [{
-            data: data,
-            borderColor: "#d4af37",
-            borderWidth: 3,
-            fill: false,
-            tension: 0.3,
-            pointRadius: 0
-        }]
+        data: data,
+        borderColor: "#d4af37",
+        borderWidth: 2.8,
+        fill: false,
+        tension: 0.38,
+        cubicInterpolationMode: 'monotone',
+        pointRadius: 0,
+        segment: {
+        borderColor: ctx => {
+            const gradient = ctx.chart.ctx.createLinearGradient(0, 0, ctx.chart.width, 0);
+            gradient.addColorStop(0, "rgba(212,175,55,0.7)");
+            gradient.addColorStop(1, "rgba(212,175,55,1)");
+            return gradient;
+        }
+    }
+}]
+
     },
     options: {
+        animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+        },
         interaction: {
             mode: 'index',
             intersect: false
@@ -645,14 +659,52 @@ chart = new Chart(ctx, {
         },
         scales: {
             x: {
-                grid: { color: "rgba(255,255,255,0.05)" }
+                grid: {
+                     color: "rgba(255,255,255,0.04)",
+                    drawBorder: false
+                },
+                ticks: {
+                    color: "rgba(255,255,255,0.5)",
+                    font: {
+                        size: 11
+                    }
+                }
             },
             y: {
-                grid: { color: "rgba(255,255,255,0.05)" }
+                grid: {
+                    color: "rgba(255,255,255,0.04)",
+                    drawBorder: false
+                },
+                ticks: {
+                    color: "rgba(255,255,255,0.5)",
+                    font: {
+                        size: 11
+                    },
+                    callback: function(value) {
+                        return new Intl.NumberFormat('es-ES', {
+                            notation: "compact",
+                            maximumFractionDigits: 1
+                        }).format(value) + " €";
+                    }
+                }
             }
         }
+const glowPlugin = {
+    id: 'glow',
+    beforeDatasetDraw(chart, args) {
+        const {ctx} = chart;
+        ctx.save();
+        ctx.shadowColor = "rgba(212,175,55,0.25)";
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
     },
-    plugins: [verticalLinePlugin]
+    afterDatasetDraw(chart, args) {
+        chart.ctx.restore();
+    }
+};
+
+    plugins: [verticalLinePlugin, glowPlugin]
 });
 
     document.getElementById("results").classList.add("visible");
