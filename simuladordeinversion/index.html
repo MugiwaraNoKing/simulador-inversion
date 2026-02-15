@@ -169,13 +169,24 @@ input[type=number] {
 }
 
 .input-wrapper input {
-    padding-left: 28px;
+    padding-right: 55px;
 }
+    
 .input-wrapper input.changed {
     transition: background 0.3s ease;
     background: linear-gradient(145deg, #162a23, #111f1a);
 }
-
+.input-suffix {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);   /* semi-transparente */
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    font-weight: 500;
+}
 
 /* NOTA */
 .note {
@@ -391,16 +402,18 @@ canvas {
         <div class="input-group">
         <label>Aportación mensual</label>
         <div class="input-wrapper">
-        <span class="currency-symbol">€</span>
-        <input type="text" id="monthly" value="300">
+            <input type="text" id="monthly" value="300">
+            <span class="input-suffix">€</span>
         </div>
     </div>
-
        
         <div class="input-group">
-            <label>Años de inversión</label>
+        <label>Años de inversión</label>
+        <div class="input-wrapper">
             <input type="number" id="years" value="20">
+            <span class="input-suffix">años</span>
         </div>
+    </div>
 
         <div class="input-group">
             <label>Rentabilidad anual (%)</label>
