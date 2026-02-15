@@ -577,6 +577,10 @@ const verticalLinePlugin = {
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
             };
+         afterDatasetDraw(chart, args) {
+            chart.ctx.restore();
+            }
+        };
     }
 };
 
