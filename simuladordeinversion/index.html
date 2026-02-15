@@ -215,12 +215,13 @@ button.btn:active {
     gap: 30px;
     text-align: center;
 }
-.result-value {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
     
+.result-value {
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
 .result-label {
     font-size: 14px;
     letter-spacing: 1px;
@@ -233,6 +234,7 @@ button.btn:active {
     font-weight: 500;
     color: #a8b0ab;
     margin-bottom: 8px;
+    letter-spacing: 0.8px;
 }
 
 .metric p {
@@ -244,7 +246,21 @@ button.btn:active {
     background-color: #1f1f1f;
     border: 1px solid rgba(255,255,255,0.05);
 }
+.metric {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.4s ease;
+}
 
+.results.visible .metric {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.results.visible .metric:nth-child(1) { transition-delay: 0.05s; }
+.results.visible .metric:nth-child(2) { transition-delay: 0.10s; }
+.results.visible .metric:nth-child(3) { transition-delay: 0.15s; }
+.results.visible .metric:nth-child(4) { transition-delay: 0.20s; }
 
 /* GRAFICA */
 .chart-container {
@@ -253,10 +269,18 @@ button.btn:active {
     border: 1px solid rgba(212,175,55,0.18);
     border-radius: 12px;
     margin-top: 40px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.6s ease;
 }
 
 canvas {
     max-height: 320px;
+}
+.results.visible .chart-container {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.25s;
 }
 
 /* MICROCOPY */
@@ -400,6 +424,15 @@ canvas {
 let chart;
 
 function calculate() {
+    const btn = document.querySelector(".btn");
+    btn.style.opacity = "0.8";
+    btn.style.pointerEvents = "none";
+
+    setTimeout(() => {
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
+    }, 600);
+
     const monthly = parseFloat(document.getElementById("monthly").value);
     const years = parseFloat(document.getElementById("years").value);
     const rate = 0.08;
