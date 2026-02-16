@@ -338,37 +338,74 @@ canvas {
     transition-delay: 0.25s;
 }
     #chartjs-tooltip {
-    position: absolute;
-    pointer-events: none;
-    opacity: 0;
-    transform: translate(-50%, -100%);
-    transition: opacity 0.2s ease;
-    z-index: 1000;
-}
+            position: absolute;
+            pointer-events: none;
+                opacity: 0;
+            transform: translate(-50%, -100%);
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+        }
 
-.tooltip-content {
-    background: linear-gradient(145deg, #13211c, #0e1a16);
-    border: 1px solid rgba(212,175,55,0.35);
-    padding: 12px 16px;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    text-align: center;
-    min-width: 140px;
-}
+        .tooltip-content {
+            background: linear-gradient(145deg, #13211c, #0e1a16);
+            border: 1px solid rgba(212,175,55,0.35);
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            min-width: 140px;
+        }
 
-.tooltip-year {
-    font-size: 12px;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-}
+        .tooltip-year {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
 
-.tooltip-value {
-    font-size: 16px;
-    font-weight: 600;
-    color: #d4af37;
-}
+        .tooltip-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #d4af37;
+        }
+ #chartjs-tooltip {
+            background: rgba(12,18,16,0.96);
+            border: 1px solid rgba(212,175,55,0.25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 13px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            pointer-events: none;
+            transition: all 0.12s ease;
+        }
 
+        .tooltip-year {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #d4af37;
+            letter-spacing: 0.3px;
+        }
+
+        .tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            color: #cfd6d2;
+        }
+
+        .tooltip-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 6px 0;
+        }
+
+        .tooltip-row.highlight {
+            color: #ffffff;
+            font-weight: 600;
+        }
+    
 /* MICROCOPY */
 .microcopy {
     text-align: center;
@@ -558,45 +595,7 @@ canvas {
                 <span>${formatCurrency(interesGenerado)}</span>
             </div>
         `;
-            #chartjs-tooltip {
-            background: rgba(12,18,16,0.96);
-            border: 1px solid rgba(212,175,55,0.25);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 13px;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            pointer-events: none;
-            transition: all 0.12s ease;
-        }
-
-        .tooltip-year {
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 8px;
-            color: #d4af37;
-            letter-spacing: 0.3px;
-        }
-
-        .tooltip-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-            color: #cfd6d2;
-        }
-
-        .tooltip-divider {
-            height: 1px;
-            background: rgba(255,255,255,0.08);
-            margin: 6px 0;
-        }
-
-        .tooltip-row.highlight {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-
+           
         const position = chart.canvas.getBoundingClientRect();
 
         tooltipEl.style.opacity = 1;
