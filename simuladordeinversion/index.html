@@ -605,12 +605,15 @@ function calculate() {
     const months = years * 12;
     let balance = 0;
     let data = [];
+    let investedData = [];
 
     for (let i = 0; i <= months; i++) {
         balance = balance * (1 + rate/12) + monthly;
         if (i % 12 === 0) {
             data.push(balance);
+            investedData.push(monthly * i);
         }
+
     }
 
     const totalInvested = monthly * months;
@@ -631,24 +634,36 @@ chart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: Array.from({length: years + 1}, (_, i) => i),
-        datasets: [{
-        data: data,
-        borderColor: "#d4af37",
-        borderWidth: 2.8,
-        fill: false,
-        tension: 0.38,
-        cubicInterpolationMode: 'monotone',
-        pointRadius: 0,
-        segment: {
-        borderColor: ctx => {
-            const gradient = ctx.chart.ctx.createLinearGradient(0, 0, ctx.chart.width, 0);
-            gradient.addColorStop(0, "rgba(212,175,55,0.7)");
-            gradient.addColorStop(1, "rgba(212,175,55,1)");
-            return gradient;
+        datasets: [
+        {
+            label: "Capital acumulado",
+            data: data,
+            borderColor: "#d4af37",
+            borderWidth: 2.8,
+            fill: false,
+            tension: 0.38,
+            cubicInterpolationMode: 'monotone',
+            pointRadius: 0,
+            segment: {
+                borderColor: ctx => {
+                    const gradient = ctx.chart.ctx.createLinearGradient(0, 0, ctx.chart.width, 0);
+                    gradient.addColorStop(0, "rgba(212,175,55,0.7)");
+                    gradient.addColorStop(1, "rgba(212,175,55,1)");
+                    return gradient;
+                }
+            }
+        },
+        {
+            label: "Capital aportado",
+            data: investedData,
+            borderColor: "rgba(200,200,200,0.35)",
+            borderWidth: 1.4,
+            borderDash: [6,6],
+            fill: false,
+            tension: 0.3,
+            pointRadius: 0
         }
-    }
-}]
-
+        ]
     },
     options: {
         animation: {
