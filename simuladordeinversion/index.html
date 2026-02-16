@@ -323,6 +323,22 @@ button.btn:active {
         filter: grayscale(40%);
         transition: opacity 0.3s ease;
     }
+    .metric.pro-locked .locked-link {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.4);
+        text-decoration: none;
+        letter-spacing: 0.3px;
+        transition: all 0.25s ease;
+        cursor: pointer;
+    }
+
+    .metric.pro-locked .locked-link:hover {
+        color: rgba(212,175,55,0.85);
+        transform: translateX(3px);
+    }
+
     .pro-inline {
         font-size: 11px;
         font-weight: 500;
@@ -588,7 +604,7 @@ canvas {
             <h3>
                 Rentabilidad anualizada
             </h3>
-            <p class="locked-value">— Disponible en PRO —</p>
+            <a href="pro.html" class="locked-link">Disponible en PRO</a>
         </div>
 
         </div>
