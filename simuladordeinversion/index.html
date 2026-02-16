@@ -530,17 +530,72 @@ canvas {
         }
 
         const year = tooltip.dataPoints[0].label;
-        const value = tooltip.dataPoints[0].raw;
 
-        const formatted = value.toLocaleString("es-ES", {
-            style: "currency",
-            currency: "EUR"
-           });
+        const capitalAcumulado = tooltip.dataPoints.find(dp => dp.datasetIndex === 0)?.raw || 0;
+        const capitalAportado = tooltip.dataPoints.find(dp => dp.datasetIndex === 1)?.raw || 0;
+        const interesGenerado = capitalAcumulado - capitalAportado;
+
+        const formatCurrency = (val) => {
+            return val.toLocaleString("es-ES", {
+                style: "currency",
+                currency: "EUR"
+            });
+        };
 
         tooltipEl.querySelector('.tooltip-content').innerHTML = `
             <div class="tooltip-year">Año ${year}</div>
-            <div class="tooltip-value">${formatted}</div>
+            <div class="tooltip-row">
+                <span>Capital acumulado</span>
+                <span>${formatCurrency(capitalAcumulado)}</span>
+            </div>
+            <div class="tooltip-row">
+                <span>Capital aportado</span>
+                <span>${formatCurrency(capitalAportado)}</span>
+            </div>
+            <div class="tooltip-divider"></div>
+            <div class="tooltip-row highlight">
+                <span>Interés generado</span>
+                <span>${formatCurrency(interesGenerado)}</span>
+            </div>
         `;
+            #chartjs-tooltip {
+            background: rgba(12,18,16,0.96);
+            border: 1px solid rgba(212,175,55,0.25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 13px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            pointer-events: none;
+            transition: all 0.12s ease;
+        }
+
+        .tooltip-year {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #d4af37;
+            letter-spacing: 0.3px;
+        }
+
+        .tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            color: #cfd6d2;
+        }
+
+        .tooltip-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 6px 0;
+        }
+
+        .tooltip-row.highlight {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
 
         const position = chart.canvas.getBoundingClientRect();
 
