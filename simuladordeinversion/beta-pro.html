@@ -189,7 +189,7 @@ function calculateProSimulation() {
     let total = initial;
 
     for (let i = 0; i < months; i++) {
-        total = (total + monthly) * (1 + monthlyRate);
+        total = total * (1 + monthlyRate) + monthly;
     }
 
     const totalContributions = (monthly * months) + initial;
