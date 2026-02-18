@@ -318,6 +318,17 @@ function calculateProSimulation() {
     const baseData = generateScenarioData(monthly, years, initial, 0.08, inflation);
     const aggressiveData = generateScenarioData(monthly, years, initial, 0.12, inflation);
     const investedData = generateInvestedData(monthly, years, initial);
+    const finalConservative = conservativeData[conservativeData.length - 1].value;
+    const finalBase = baseData[baseData.length - 1].value;
+    const finalAggressive = aggressiveData[aggressiveData.length - 1].value;
+    const totalInvested = investedData[investedData.length - 1].value;
+
+    const multipleConservative = finalConservative / totalInvested;
+    const multipleBase = finalBase / totalInvested;
+    const multipleAggressive = finalAggressive / totalInvested;
+
+    const diffConservativeVsBase = finalBase - finalConservative;
+    const diffAggressiveVsBase = finalAggressive - finalBase;
 
     const months = years * 12;
     const monthlyRate = rate / 12;
