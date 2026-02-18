@@ -162,6 +162,38 @@ body {
     background-color: #0c1714;
     color: white;
 }
+    .pro-comparison {
+    margin-top: 60px;
+}
+
+.pro-comparison h3 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.comparison-card {
+    background: #0c1714;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.comparison-card.highlight {
+    border: 1px solid rgba(212,175,55,0.5);
+}
+
+.pro-insight {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
 
 </style>
 </head>
@@ -226,6 +258,19 @@ body {
        
         <div style="margin-top: 30px;">
         <button id="pro-calculate">Calcular simulación</button>
+        </div>
+       
+        <div id="proComparisonBlock" class="pro-comparison" style="display:none;">
+            <h3>Comparativa de escenarios</h3>
+            <div class="comparison-grid">
+
+                <div class="comparison-card" id="cardConservative"></div>
+                <div class="comparison-card highlight" id="cardBase"></div>
+                <div class="comparison-card" id="cardAggressive"></div>
+
+            </div>
+
+            <div id="proInsight" class="pro-insight"></div>
         </div>
 
     </section>
@@ -319,6 +364,25 @@ function calculateProSimulation() {
     const aggressiveData = generateScenarioData(monthly, years, initial, 0.12, inflation);
     const investedData = generateInvestedData(monthly, years, initial);
 
+    const finalConservative = conservativeData.at(-1).value;
+    const finalBase = baseData.at(-1).value;
+    const finalAggressive = aggressiveData.at(-1).value;
+    const totalInvested = investedData.at(-1).value;
+
+    const interestConservative = finalConservative - totalInvested;
+    const interestBase = finalBase - totalInvested;
+    const interestAggressive = finalAggressive - totalInvested;
+
+    const multipleConservative = finalConservative / totalInvested;
+    const multipleBase = finalBase / totalInvested;
+    const multipleAggressive = finalAggressive / totalInvested;
+
+    const diffConservativeVsBase = finalBase - finalConservative;
+    const diffAggressiveVsBase = finalAggressive - finalBase;
+
+    const aggressiveAdvantagePercent =
+        ((finalAggressive / finalBase) - 1) * 100;
+
     const months = years * 12;
     const monthlyRate = rate / 12;
 
@@ -337,7 +401,7 @@ function calculateProSimulation() {
 
         const realAdjusted = total / Math.pow(1 + inflation, year);
 
-        yearlyData.push({
+    yearlyData.push({
             year: year,
             nominal: total,
             real: realAdjusted,
@@ -377,7 +441,7 @@ function calculateProSimulation() {
         </div>
     `;
 
-        document.querySelectorAll(".pro-metric").forEach((el, index) => {
+    document.querySelectorAll(".pro-metric").forEach((el, index) => {
         el.style.opacity = 0;
         el.style.transform = "translateY(10px)";
         setTimeout(() => {
@@ -391,6 +455,37 @@ function calculateProSimulation() {
     if (window.proChartInstance) {
         window.proChartInstance.destroy();
     }
+
+    document.getElementById("proComparisonBlock").style.display = "block";
+
+document.getElementById("cardConservative").innerHTML = `
+<h4>Conservador (4%)</h4>
+<p><strong>Capital final:</strong> ${finalConservative.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Intereses:</strong> ${interestConservative.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Múltiplo:</strong> ×${multipleConservative.toFixed(2)}</p>
+<p style="opacity:0.7;">Coste vs Base: -${diffConservativeVsBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+`;
+
+document.getElementById("cardBase").innerHTML = `
+<h4>Base (8%)</h4>
+<p><strong>Capital final:</strong> ${finalBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Intereses:</strong> ${interestBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Múltiplo:</strong> ×${multipleBase.toFixed(2)}</p>
+`;
+
+document.getElementById("cardAggressive").innerHTML = `
+<h4>Agresivo (12%)</h4>
+<p><strong>Capital final:</strong> ${finalAggressive.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Intereses:</strong> ${interestAggressive.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+<p><strong>Múltiplo:</strong> ×${multipleAggressive.toFixed(2)}</p>
+<p style="opacity:0.7;">Ventaja vs Base: +${diffAggressiveVsBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
+`;
+
+document.getElementById("proInsight").innerHTML = `
+Con un perfil agresivo, el capital final es un 
+<strong>${aggressiveAdvantagePercent.toFixed(1)}% superior</strong> 
+al escenario base.
+`;
 
     window.proChartInstance = new Chart(ctx, {
         type: 'line',
