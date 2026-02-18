@@ -355,9 +355,15 @@ function calculateProSimulation() {
     const initial = parseFloat(document.getElementById("pro-initial").value) || 0;
     const rate = (parseFloat(document.getElementById("pro-rate").value) || 0) / 100;
     const inflation = (parseFloat(document.getElementById("pro-inflation").value) || 0) / 100;
-    const conservativeData = generateScenarioData(monthly, years, initial, 0.04, inflation);
-    const baseData = generateScenarioData(monthly, years, initial, 0.08, inflation);
-    const aggressiveData = generateScenarioData(monthly, years, initial, 0.12, inflation);
+    const baseRate = (parseFloat(document.getElementById("pro-rate").value) || 8) / 100;
+
+    const conservativeRate = Math.max(baseRate - 0.04, 0);
+    const aggressiveRate = baseRate + 0.04;
+
+    const conservativeData = generateScenarioData(monthly, years, initial, conservativeRate, inflation);
+    const baseData = generateScenarioData(monthly, years, initial, baseRate, inflation);
+    const aggressiveData = generateScenarioData(monthly, years, initial, aggressiveRate, inflation);
+
     const investedData = generateInvestedData(monthly, years, initial);
 
     const finalConservative = conservativeData.at(-1).value;
@@ -455,7 +461,7 @@ function calculateProSimulation() {
     document.getElementById("proComparisonBlock").style.display = "block";
 
 document.getElementById("cardConservative").innerHTML = `
-<h4>Conservador (4%)</h4>
+<h4>Conservador (${(conservativeRate*100).toFixed(1)}%)</h4>
 <p><strong>Capital final:</strong> ${finalConservative.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Intereses:</strong> ${interestConservative.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Múltiplo:</strong> ×${multipleConservative.toFixed(2)}</p>
@@ -463,14 +469,14 @@ document.getElementById("cardConservative").innerHTML = `
 `;
 
 document.getElementById("cardBase").innerHTML = `
-<h4>Base (8%)</h4>
+<h4>Base (${(baseRate*100).toFixed(1)}%)</h4>
 <p><strong>Capital final:</strong> ${finalBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Intereses:</strong> ${interestBase.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Múltiplo:</strong> ×${multipleBase.toFixed(2)}</p>
 `;
 
 document.getElementById("cardAggressive").innerHTML = `
-<h4>Agresivo (12%)</h4>
+<h4>Agresivo (${(aggressiveRate*100).toFixed(1)}%)</h4>
 <p><strong>Capital final:</strong> ${finalAggressive.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Intereses:</strong> ${interestAggressive.toLocaleString("es-ES",{minimumFractionDigits:2})} €</p>
 <p><strong>Múltiplo:</strong> ×${multipleAggressive.toFixed(2)}</p>
@@ -489,7 +495,7 @@ al escenario base.
             labels: baseData.map(d => "Año " + d.year),
             datasets: [
             {
-                label: "Conservador (4%)",
+                label: `Conservador (${(conservativeRate*100).toFixed(1)}%)`,
                 data: conservativeData.map(d => d.value),
                 borderColor: "rgba(120,120,120,0.8)",
                 tension: 0.3,
@@ -499,7 +505,7 @@ al escenario base.
                 fill: false,
             },
             {
-                label: "Base (8%)",
+                label: `Base (${(baseRate*100).toFixed(1)}%)`,
                 data: baseData.map(d => d.value),
                 borderColor: "rgba(212,175,55,1)",
                 tension: 0.3,
@@ -509,7 +515,7 @@ al escenario base.
                 fill: false,
             },
             {
-                label: "Agresivo (12%)",
+                label: `Agresivo (${(aggressiveRate*100).toFixed(1)}%)`,
                 data: aggressiveData.map(d => d.value),
                 borderColor: "rgba(80,200,120,0.9)",
                 tension: 0.3,
