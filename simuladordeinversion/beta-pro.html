@@ -322,6 +322,8 @@ function calculateProSimulation() {
     const months = years * 12;
     const monthlyRate = rate / 12;
 
+    if (years <= 0) return;
+
     let total = initial;
     let yearlyData = [];
     let investedSoFar = initial;
@@ -433,46 +435,43 @@ function calculateProSimulation() {
 
         },
         options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    labels: { color: "white" }
-                   },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                    backgroundColor: "#111",
-                    titleColor: "#fff",
-                    bodyColor: "#fff",
-                    borderColor: "rgba(212,175,55,0.5)",
-                    borderWidth: 1,
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ": " +
-                                context.parsed.y.toLocaleString("es-ES", {
-                                    minimumFractionDigits: 2
-                                }) + " €";
-                        }
-                    }
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
-
-            scales: {
-                x: {
-                    ticks: { color: "rgba(255,255,255,0.6)" },
-                    grid: { color: "rgba(255,255,255,0.05)" }
-                },
-                y: {
-                    ticks: { color: "rgba(255,255,255,0.6)" },
-                    grid: { color: "rgba(255,255,255,0.05)" }
+    responsive: true,
+    interaction: {
+        mode: 'index',
+        intersect: false
+    },
+    plugins: {
+        legend: {
+            labels: { color: "white" }
+        },
+        tooltip: {
+            mode: 'index',
+            intersect: false,
+            backgroundColor: "#111",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "rgba(212,175,55,0.5)",
+            borderWidth: 1,
+            callbacks: {
+                label: function(context) {
+                    return context.dataset.label + ": " +
+                        context.parsed.y.toLocaleString("es-ES", {
+                            minimumFractionDigits: 2
+                        }) + " €";
                 }
             }
         }
-    });
+    },
+    scales: {
+        x: {
+            ticks: { color: "rgba(255,255,255,0.6)" },
+            grid: { color: "rgba(255,255,255,0.05)" }
+        },
+        y: {
+            ticks: { color: "rgba(255,255,255,0.6)" },
+            grid: { color: "rgba(255,255,255,0.05)" }
+        }
+    }
 }
 
 document.getElementById("pro-calculate").addEventListener("click", calculateProSimulation);
