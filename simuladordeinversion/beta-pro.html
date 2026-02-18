@@ -330,6 +330,9 @@ function calculateProSimulation() {
     const diffConservativeVsBase = finalBase - finalConservative;
     const diffAggressiveVsBase = finalAggressive - finalBase;
 
+    const aggressiveAdvantagePercent = 
+    ((finalAggressive / finalBase) - 1) * 100;
+
     const months = years * 12;
     const monthlyRate = rate / 12;
 
