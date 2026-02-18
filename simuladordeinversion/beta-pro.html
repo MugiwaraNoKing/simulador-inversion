@@ -550,7 +550,20 @@ al escenario base.
                 pointRadius: 0,
                 pointHoverRadius: 5,
                 borderWidth: widthConservative,
-                fill: false,
+                fill: selectedScenario === "conservative",
+                backgroundColor: function(context) {
+                    if (selectedScenario !== "conservative") return null;
+
+                    const chart = context.chart;
+                    const {ctx, chartArea} = chart;
+                    if (!chartArea) return null;
+
+                    const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                    gradient.addColorStop(0, "rgba(120,120,120,0.25)");
+                    gradient.addColorStop(1, "rgba(120,120,120,0.02)");
+                    return gradient;
+                },
+
             },
             {
                 label: `Base (${(baseRate*100).toFixed(1)}%)`,
@@ -560,7 +573,20 @@ al escenario base.
                 pointRadius: 0,
                 pointHoverRadius: 5,
                 borderWidth: widthBase,
-                fill: false,
+                fill: selectedScenario === "base" || selectedScenario === "custom",
+                backgroundColor: function(context) {
+                    if (selectedScenario !== "base" && selectedScenario !== "custom") return null;
+
+                    const chart = context.chart;
+                    const {ctx, chartArea} = chart;
+                    if (!chartArea) return null;
+
+                    const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                    gradient.addColorStop(0, "rgba(212,175,55,0.35)");
+                    gradient.addColorStop(1, "rgba(212,175,55,0.02)");
+                    return gradient;
+                },
+
             },
             {
                 label: `Agresivo (${(aggressiveRate*100).toFixed(1)}%)`,
@@ -570,7 +596,20 @@ al escenario base.
                 pointRadius: 0,
                 pointHoverRadius: 5,
                 borderWidth: widthAggressive,
-                fill: false,
+                fill: selectedScenario === "aggressive",
+                backgroundColor: function(context) {
+                    if (selectedScenario !== "aggressive") return null;
+
+                    const chart = context.chart;
+                    const {ctx, chartArea} = chart;
+                    if (!chartArea) return null;
+
+                    const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                    gradient.addColorStop(0, "rgba(80,200,120,0.35)");
+                    gradient.addColorStop(1, "rgba(80,200,120,0.02)");
+                    return gradient;
+                },
+
             },
             {
                 label: "Total aportado",
