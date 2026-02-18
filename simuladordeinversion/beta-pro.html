@@ -477,7 +477,7 @@ function calculateProSimulation() {
 
         ctx.save();
         ctx.shadowColor = color;
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 25;
         ctx.lineWidth = chart.data.datasets[datasetIndex].borderWidth;
         datasetMeta.dataset.draw(ctx);
         ctx.restore();
