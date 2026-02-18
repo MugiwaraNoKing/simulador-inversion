@@ -93,6 +93,38 @@ body {
     transform: translateY(-2px);
     background: rgba(212,175,55,1);
 }
+.pro-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.pro-metric {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+}
+
+.pro-metric:hover {
+    border: 1px solid rgba(212,175,55,0.4);
+    transform: translateY(-3px);
+}
+
+.pro-metric span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.pro-metric strong {
+    font-size: 18px;
+    font-weight: 600;
+}
 
 </style>
 </head>
@@ -199,19 +231,31 @@ function calculateProSimulation() {
     const profit = total - totalContributions;
 
     document.getElementById("pro-results").innerHTML = `
-        <div style="margin-bottom:10px;">
-            Total aportado: ${totalContributions.toLocaleString("es-ES", {minimumFractionDigits: 2})} €
-        </div>
-        <div>
-            Beneficio generado: ${profit.toLocaleString("es-ES", {minimumFractionDigits: 2})} €
-        </div>
-        <div style="font-size:18px; margin-bottom:10px;">
-            Capital final: <strong>${total.toLocaleString("es-ES", {minimumFractionDigits: 2})} €</strong>
-        </div>
-        <div style="margin-bottom:10px;">
-            Capital final (ajustado por inflación): ${realValue.toLocaleString("es-ES", {minimumFractionDigits: 2})} €
+        <div class="pro-metrics-grid">
+
+            <div class="pro-metric">
+                <span>Capital final nominal</span>
+                <strong>${total.toLocaleString("es-ES", {minimumFractionDigits: 2})} €</strong>
+            </div>
+
+            <div class="pro-metric">
+                <span>Capital ajustado por inflación</span>
+                <strong>${realValue.toLocaleString("es-ES", {minimumFractionDigits: 2})} €</strong>
+            </div>
+
+            <div class="pro-metric">
+                <span>Total aportado</span>
+                <strong>${totalContributions.toLocaleString("es-ES", {minimumFractionDigits: 2})} €</strong>
+            </div>
+
+            <div class="pro-metric">
+                <span>Beneficio generado</span>
+                <strong>${profit.toLocaleString("es-ES", {minimumFractionDigits: 2})} €</strong>
+            </div>
+
         </div>
     `;
+
 }
 
 document.getElementById("pro-calculate").addEventListener("click", calculateProSimulation);
