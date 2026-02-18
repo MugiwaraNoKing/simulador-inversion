@@ -264,6 +264,29 @@ body {
 
 <script>
 
+function generateScenarioData(monthly, years, initial, annualRate, inflation) {
+
+    const monthlyRate = annualRate / 12;
+    let total = initial;
+    let investedSoFar = initial;
+    let data = [];
+
+    for (let year = 1; year <= years; year++) {
+
+        for (let m = 0; m < 12; m++) {
+            total = total * (1 + monthlyRate) + monthly;
+            investedSoFar += monthly;
+        }
+
+        data.push({
+            year: year,
+            value: total
+        });
+    }
+
+    return data;
+}
+
 function calculateProSimulation() {
 
     const monthly = parseFloat(document.getElementById("pro-monthly").value) || 0;
@@ -271,6 +294,9 @@ function calculateProSimulation() {
     const initial = parseFloat(document.getElementById("pro-initial").value) || 0;
     const rate = (parseFloat(document.getElementById("pro-rate").value) || 0) / 100;
     const inflation = (parseFloat(document.getElementById("pro-inflation").value) || 0) / 100;
+    const conservativeData = generateScenarioData(monthly, years, initial, 0.04, inflation);
+    const baseData = generateScenarioData(monthly, years, initial, 0.08, inflation);
+    const aggressiveData = generateScenarioData(monthly, years, initial, 0.12, inflation);
 
     const months = years * 12;
     const monthlyRate = rate / 12;
@@ -346,29 +372,28 @@ function calculateProSimulation() {
     window.proChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: yearlyData.map(d => "Año " + d.year),
+            labels: baseData.map(d => "Año " + d.year),
             datasets: [
-                {
-                    label: "Capital nominal",
-                    data: yearlyData.map(d => d.nominal),
-                    borderColor: "rgba(212,175,55,1)",
-                        backgroundColor: "rgba(212,175,55,0.1)",
+            {
+                label: "Conservador (4%)",
+                data: conservativeData.map(d => d.value),
+                borderColor: "rgba(120,120,120,0.8)",
                 tension: 0.3
-                },
-                {
-                    label: "Capital real",
-                    data: yearlyData.map(d => d.real),
-                    borderColor: "rgba(255,255,255,0.7)",
-                    tension: 0.3
-                },
-                {
-                    label: "Total aportado",
-                    data: yearlyData.map(d => d.invested),
-                    borderColor: "rgba(100,100,100,0.6)",
-                    borderDash: [5,5],
-                    tension: 0.3
-                }
-            ]
+            },
+            {
+                label: "Base (8%)",
+                data: baseData.map(d => d.value),
+                borderColor: "rgba(212,175,55,1)",
+                tension: 0.3
+            },
+            {
+                label: "Agresivo (12%)",
+                data: aggressiveData.map(d => d.value),
+                borderColor: "rgba(80,200,120,0.9)",
+                tension: 0.3
+            }
+        ]
+
         },
         options: {
             responsive: true,
