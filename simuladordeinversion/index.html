@@ -774,7 +774,7 @@ function calculate() {
     let data = [];
     let investedData = [];
 
-    for (let i = 0; i <= months; i++) {
+    for (let i = 0; i < months; i++) {
         balance = balance * (1 + rate/12) + monthly;
         if (i % 12 === 0) {
             data.push(balance);
